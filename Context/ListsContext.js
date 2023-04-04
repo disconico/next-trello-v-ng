@@ -1,53 +1,49 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import {
+  saveToLocalStorage,
+  loadFromLocalStorage,
+} from '../utils/localStorage';
 
 const ListsContext = createContext();
 
 const initialLists = [
   {
-    title: 'First list',
+    title: 'My first list',
     id: uuidv4(),
     cards: [
       {
-        title: 'card-1',
+        title: 'My first card',
         cardId: uuidv4(),
         listId: '',
-        isFollowed: true,
-        description: '',
-      },
-      {
-        title: 'card-1',
-        cardId: uuidv4(),
-        listId: '',
-        isFollowed: true,
-        description: '',
-      },
-      {
-        title: 'card-1',
-        cardId: uuidv4(),
-        listId: '',
-        isFollowed: true,
-        description: '',
-      },
-      {
-        title: 'card-2',
         isFollowed: false,
-        description: 'Nice',
+        description: '',
+      },
+      {
+        title: 'My second card',
         cardId: uuidv4(),
         listId: '',
+        isFollowed: false,
+        description: '',
+      },
+      {
+        title: 'Followed card',
+        cardId: uuidv4(),
+        listId: '',
+        isFollowed: true,
+        description: '',
       },
     ],
   },
   {
-    title: 'Second list',
+    title: 'My second list',
     id: uuidv4(),
     cards: [
-      { title: 'card-1', cardId: uuidv4(), listId: '', isFollowed: false },
       {
-        title: 'card-2',
+        title: 'Followed card with description',
         isFollowed: true,
-        description: 'Nice',
+        description: 'My first description',
         cardId: uuidv4(),
         listId: '',
       },
@@ -67,32 +63,47 @@ const setListIdsAndCardIds = (lists) => {
 };
 
 const ListsProvider = ({ children }) => {
-  const [lists, setLists] = useState(setListIdsAndCardIds(initialLists));
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    const savedLists = loadFromLocalStorage('lists');
+    if (savedLists) {
+      setLists(savedLists);
+    } else {
+      setLists(setListIdsAndCardIds(initialLists));
+    }
+  }, []);
+
+  const updateAndSaveLists = (updatedLists) => {
+    setLists(updatedLists);
+    saveToLocalStorage('lists', updatedLists);
+  };
 
   const resetLists = () => {
-    setLists(setListIdsAndCardIds(initialLists));
+    const newLists = setListIdsAndCardIds(initialLists);
+    updateAndSaveLists(newLists);
   };
 
   const addList = (title) => {
     const newList = {
       title,
-      id: Math.random().toString(36),
+      id: uuidv4(),
       cards: [],
     };
 
-    setLists((prevLists) => [...prevLists, newList]);
+    updateAndSaveLists([...lists, newList]);
   };
 
   const deleteList = (listId) => {
     const updatedLists = lists.filter((list) => list.id !== listId);
-    setLists(updatedLists);
+    updateAndSaveLists(updatedLists);
   };
 
   const addCard = (title, listId) => {
     const newCard = {
       title,
       isFollowed: false,
-      cardId: Math.random().toString(36),
+      cardId: uuidv4(),
       listId,
     };
     const updatedLists = lists.map((list) => {
@@ -104,7 +115,7 @@ const ListsProvider = ({ children }) => {
       }
       return list;
     });
-    setLists(updatedLists);
+    updateAndSaveLists(updatedLists);
   };
 
   const deleteCard = (cardId, listId) => {
@@ -120,7 +131,7 @@ const ListsProvider = ({ children }) => {
       }
       return list;
     });
-    setLists(updatedLists);
+    updateAndSaveLists(updatedLists);
   };
 
   const toggleFollow = (cardId, listId) => {
@@ -142,7 +153,7 @@ const ListsProvider = ({ children }) => {
       }
       return list;
     });
-    setLists(updatedLists);
+    updateAndSaveLists(updatedLists);
   };
 
   const updateCardDescription = (cardId, listId, newDescription) => {
@@ -164,7 +175,7 @@ const ListsProvider = ({ children }) => {
       }
       return list;
     });
-    setLists(updatedLists);
+    updateAndSaveLists(updatedLists);
   };
 
   return (
