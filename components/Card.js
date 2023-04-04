@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { ListsContext } from '../Context/ListsContext';
+import { useState, useContext } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BsTextLeft } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import Modal from './CardModal';
 
-const Card = ({ card }) => {
-  const { title, description, isFollowed, cardId, list } = card;
-
+const Card = ({ card, listName }) => {
+  const { title, description, isFollowed, cardId, listId } = card;
+  console.log(listId);
+  const { deleteCard, toggleFollow } = useContext(ListsContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -42,8 +44,11 @@ const Card = ({ card }) => {
         isOpen={isModalOpen}
         onClose={toggleModal}
         title={title}
-        list={list}
+        listId={listId}
+        listName={listName}
         description={description}
+        deleteCard={deleteCard}
+        toggleFollow={toggleFollow}
       />
     </>
   );
@@ -51,6 +56,7 @@ const Card = ({ card }) => {
 
 Card.propTypes = {
   card: PropTypes.object.isRequired,
+  listName: PropTypes.string.isRequired,
 };
 
 export default Card;

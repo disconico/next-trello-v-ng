@@ -9,13 +9,26 @@ const Modal = ({
   onClose,
   cardId,
   title,
-  list,
+  listId,
+  listName,
   isFollowed,
   description,
+  deleteCard,
+  toggleFollow,
 }) => {
   if (!isOpen) {
     return null;
   }
+
+  const handleAlert = () => {
+    const result = window.confirm(
+      `Vous allez supprimer la carte nommée ${title}. \nAppuyez sur OK pour continuer. \nOu sur "Annuler" pour fermer. `
+    );
+    if (result) {
+      deleteCard(cardId, listId);
+      onClose();
+    }
+  };
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center  p-4 bg-black bg-opacity-50'>
@@ -34,7 +47,7 @@ const Modal = ({
           </div>
         </div>
         <div className='text-sm font-normal text-[#313131 flex gap-1 items-center'>
-          Dans la liste <span className='underline'>{list}</span>{' '}
+          Dans la liste <span className='underline'>{listName}</span>{' '}
           <span>
             {isFollowed ? (
               <IconContext.Provider value={{ className: 'w-4 h-4' }}>
@@ -83,7 +96,10 @@ const Modal = ({
             {' '}
             <h3 className='text-xl font-semibold mb-2'>Actions</h3>
             <div className='flex flex-col items-start gap-2'>
-              <button className='w-[170px] text-[#313131] h-8 text-sm bg-gray-200 hover:bg-gray-300 flex items-center gap-1 rounded-sm pl-2'>
+              <button
+                className='w-[170px] text-[#313131] h-8 text-sm bg-gray-200 hover:bg-gray-300 flex items-center gap-1 rounded-sm pl-2'
+                onClick={() => toggleFollow(cardId, listId)}
+              >
                 <span>
                   <IconContext.Provider value={{ className: 'w-4 h-4' }}>
                     <AiOutlineEye />
@@ -102,7 +118,10 @@ const Modal = ({
                   </span>
                 )}
               </button>
-              <button className='w-[170px] text-[#313131] h-8 text-sm bg-gray-200 hover:bg-gray-300 flex items-center gap-1 rounded-sm pl-2'>
+              <button
+                className='w-[170px] text-[#313131] h-8 text-sm bg-gray-200 hover:bg-gray-300 flex items-center gap-1 rounded-sm pl-2'
+                onClick={handleAlert}
+              >
                 <span>
                   <IconContext.Provider value={{ className: 'w-4 h-4' }}>
                     <AiOutlineMinus />
@@ -122,9 +141,12 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   cardId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  list: PropTypes.string.isRequired,
+  listId: PropTypes.string.isRequired,
+  listName: PropTypes.string.isRequired,
   isFollowed: PropTypes.bool.isRequired,
   description: PropTypes.string,
+  deleteCard: PropTypes.func.isRequired,
+  toggleFollow: PropTypes.func.isRequired,
 };
 
 export default Modal;
