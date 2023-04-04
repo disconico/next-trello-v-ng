@@ -8,8 +8,8 @@ import Modal from './CardModal';
 
 const Card = ({ card, listName }) => {
   const { title, description, isFollowed, cardId, listId } = card;
-  console.log(listId);
-  const { deleteCard, toggleFollow } = useContext(ListsContext);
+  const { deleteCard, toggleFollow, updateCardDescription } =
+    useContext(ListsContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -49,6 +49,7 @@ const Card = ({ card, listName }) => {
         description={description}
         deleteCard={deleteCard}
         toggleFollow={toggleFollow}
+        updateCardDescription={updateCardDescription}
       />
     </>
   );

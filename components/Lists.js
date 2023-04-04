@@ -43,17 +43,26 @@ const Lists = ({ title, cards, id, addCard, deleteList }) => {
               <Card key={index} card={card} listName={title} />
             ))}
         </div>
-        <button className='p-2 text-sm text-[#616161]' onClick={toggleForm}>
-          <div className='flex gap-2 px-4 rounded hover:bg-[#091e4214] h-[30px] items-center'>
-            <IconContext.Provider
-              value={{ className: 'w-4 h-4 text-gray-800' }}
-            >
-              <AiOutlinePlus />
-            </IconContext.Provider>
-            <div>{`Ajouter une ${cards.length > 0 ? 'autre' : ''} carte`}</div>
-          </div>
-        </button>
-        <CardForm isFormOpen={isFormOpen} toggleForm={toggleForm} listId={id} />
+        {!isFormOpen && (
+          <button className='p-2 text-sm text-[#616161]' onClick={toggleForm}>
+            <div className='flex gap-2 px-4 rounded hover:bg-[#091e4214] h-[30px] items-center'>
+              <IconContext.Provider
+                value={{ className: 'w-4 h-4 text-gray-800' }}
+              >
+                <AiOutlinePlus />
+              </IconContext.Provider>
+              <div>{`Ajouter une ${
+                cards.length > 0 ? 'autre' : ''
+              } carte`}</div>
+            </div>
+          </button>
+        )}
+        <CardForm
+          isFormOpen={isFormOpen}
+          toggleForm={toggleForm}
+          listId={id}
+          addCard={addCard}
+        />
       </div>
     </div>
   );

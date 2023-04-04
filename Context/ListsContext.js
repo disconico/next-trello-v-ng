@@ -9,9 +9,27 @@ const initialLists = [
     title: 'First list',
     id: uuidv4(),
     cards: [
-      { title: 'card-1', cardId: uuidv4(), listId: '', isFollowed: true },
-      { title: 'card-1', cardId: uuidv4(), listId: '', isFollowed: true },
-      { title: 'card-1', cardId: uuidv4(), listId: '', isFollowed: true },
+      {
+        title: 'card-1',
+        cardId: uuidv4(),
+        listId: '',
+        isFollowed: true,
+        description: '',
+      },
+      {
+        title: 'card-1',
+        cardId: uuidv4(),
+        listId: '',
+        isFollowed: true,
+        description: '',
+      },
+      {
+        title: 'card-1',
+        cardId: uuidv4(),
+        listId: '',
+        isFollowed: true,
+        description: '',
+      },
       {
         title: 'card-2',
         isFollowed: false,
@@ -50,6 +68,10 @@ const setListIdsAndCardIds = (lists) => {
 
 const ListsProvider = ({ children }) => {
   const [lists, setLists] = useState(setListIdsAndCardIds(initialLists));
+
+  const resetLists = () => {
+    setLists(setListIdsAndCardIds(initialLists));
+  };
 
   const addList = (title) => {
     const newList = {
@@ -123,9 +145,40 @@ const ListsProvider = ({ children }) => {
     setLists(updatedLists);
   };
 
+  const updateCardDescription = (cardId, listId, newDescription) => {
+    const updatedLists = lists.map((list) => {
+      if (list.id === listId) {
+        const updatedCards = list.cards.map((card) => {
+          if (card.cardId === cardId) {
+            return {
+              ...card,
+              description: newDescription,
+            };
+          }
+          return card;
+        });
+        return {
+          ...list,
+          cards: updatedCards,
+        };
+      }
+      return list;
+    });
+    setLists(updatedLists);
+  };
+
   return (
     <ListsContext.Provider
-      value={{ lists, addList, addCard, deleteList, deleteCard, toggleFollow }}
+      value={{
+        lists,
+        addList,
+        addCard,
+        deleteList,
+        deleteCard,
+        toggleFollow,
+        resetLists,
+        updateCardDescription,
+      }}
     >
       {children}
     </ListsContext.Provider>

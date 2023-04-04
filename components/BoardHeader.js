@@ -1,14 +1,17 @@
-import Button from './layout/Button';
+import Button from './layout/ValidateButton';
+import PropTypes from 'prop-types';
 
-const BoardHeader = () => {
+const BoardHeader = ({ resetLists }) => {
   return (
     <div className='p-2 flex gap-4'>
       <h1 className='text-white text-lg pl-3'>Tableau principal</h1>
-      <Button handleClick={() => console.log('click')}>
-        Initialiser le jeu de données
-      </Button>
+      <Button handleClick={resetLists}>Initialiser le jeu de données</Button>
     </div>
   );
+};
+
+BoardHeader.propTypes = {
+  resetLists: PropTypes.func.isRequired,
 };
 
 export default BoardHeader;

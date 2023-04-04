@@ -1,8 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AiOutlineEye, AiOutlineMinus } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import Image from 'next/image';
+import DescriptionForm from './DescriptionForm';
 
 const Modal = ({
   isOpen,
@@ -15,10 +16,17 @@ const Modal = ({
   description,
   deleteCard,
   toggleFollow,
+  updateCardDescription,
 }) => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   if (!isOpen) {
     return null;
   }
+
+  const toggleForm = () => {
+    setIsFormOpen((prev) => !prev);
+  };
 
   const handleAlert = () => {
     const result = window.confirm(
@@ -63,32 +71,31 @@ const Modal = ({
             {' '}
             <h3 className='text-xl font-semibold mb-2'>Description</h3>
             <div>
-              {description && (
-                <p className='text-sm font-normal text-[#313131]'>
+              {!isFormOpen && description && (
+                <p
+                  className='text-sm font-normal text-[#313131]'
+                  onClick={toggleForm}
+                >
                   {description}
                 </p>
               )}
-              {!description && (
-                <form className='flex flex-col gap-2'>
-                  <textarea
-                    className='w-full h-16 text-sm border border-gray-300 rounded-md p-2'
-                    placeholder='Ajouter une description plus détaillée...'
-                  ></textarea>
-                  <div className='flex gap-2'>
-                    <button
-                      type='button'
-                      className='bg-[#5aac44] hover:bg-[#61bd4f] text-white px-3 h-8 text-sm rounded '
-                    >
-                      Enregistrer
-                    </button>
-                    <button
-                      type='button'
-                      className=' px-3 h-8 text-gray-600 hover:text-gray-900 text-2xl rounded '
-                    >
-                      &times;
-                    </button>
-                  </div>
-                </form>
+              {!isFormOpen && !description && (
+                <p
+                  className='text-sm font-normal text-[#313131]'
+                  onClick={toggleForm}
+                >
+                  Add description
+                </p>
+              )}
+              {isFormOpen && (
+                <DescriptionForm
+                  key={cardId}
+                  description={description}
+                  cardId={cardId}
+                  listId={listId}
+                  toggleForm={toggleForm}
+                  updateCardDescription={updateCardDescription}
+                />
               )}
             </div>
           </div>
@@ -147,6 +154,7 @@ Modal.propTypes = {
   description: PropTypes.string,
   deleteCard: PropTypes.func.isRequired,
   toggleFollow: PropTypes.func.isRequired,
+  updateCardDescription: PropTypes.func.isRequired,
 };
 
 export default Modal;
