@@ -1,6 +1,6 @@
 import CloseButton from './layout/CloseButton';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const DescriptionForm = ({
   cardId,
@@ -10,6 +10,11 @@ const DescriptionForm = ({
   updateCardDescription,
 }) => {
   const [newDescription, setNewDescription] = useState(description || '');
+  const descriptionRef = useRef(null);
+
+  useEffect(() => {
+    descriptionRef.current.focus();
+  }, []);
 
   const handleChange = (e) => {
     setNewDescription(e.target.value);
@@ -23,6 +28,7 @@ const DescriptionForm = ({
   return (
     <form className='flex flex-col gap-2'>
       <textarea
+        ref={descriptionRef}
         className='w-full h-16 text-sm border border-gray-300 rounded-md p-2'
         placeholder='Ajouter une description plus détaillée...'
         value={newDescription}

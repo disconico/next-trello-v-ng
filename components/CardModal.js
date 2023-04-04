@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { AiOutlineEye, AiOutlineMinus } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
@@ -19,6 +19,28 @@ const Modal = ({
   updateCardDescription,
 }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const modalRef = useRef();
+
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, handleClickOutside]);
 
   if (!isOpen) {
     return null;
@@ -40,7 +62,10 @@ const Modal = ({
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center  p-4 bg-black bg-opacity-50'>
-      <div className='bg-[#F4F5F7] rounded-md shadow-lg w-[780px]  px-6 pt-4 pb-8'>
+      <div
+        className='bg-[#F4F5F7] rounded-md shadow-lg w-[780px]  px-6 pt-4 pb-8'
+        ref={modalRef}
+      >
         <div className='flex justify-between'>
           <h3 className='text-xl font-semibold'>{title}</h3>
           <div
@@ -73,7 +98,7 @@ const Modal = ({
             <div>
               {!isFormOpen && description && (
                 <p
-                  className='text-sm font-normal text-[#313131]'
+                  className='text-sm font-normal text-[#313131] hover:cursor-pointer'
                   onClick={toggleForm}
                 >
                   {description}
@@ -81,10 +106,10 @@ const Modal = ({
               )}
               {!isFormOpen && !description && (
                 <p
-                  className='text-sm font-normal text-[#313131]'
+                  className='text-sm font-normal h-14 p-2 rounded hover:cursor-pointer hover:bg-gray-300 text-[#313131] bg-gray-200'
                   onClick={toggleForm}
                 >
-                  Add description
+                  Ajouter une description plus détaillée...
                 </p>
               )}
               {isFormOpen && (

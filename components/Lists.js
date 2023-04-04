@@ -1,17 +1,36 @@
 import Card from './Card';
 import CardForm from './CardForm';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 
 const Lists = ({ title, cards, id, addCard, deleteList }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const formRef = useRef();
 
   const toggleForm = () => {
     setIsFormOpen((prev) => !prev);
   };
+
+  const handleClickOutside = (e) => {
+    if (formRef.current && !formRef.current.contains(e.target)) {
+      setIsFormOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isFormOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isFormOpen]);
 
   const handleAlert = () => {
     const result = window.confirm(
@@ -57,12 +76,14 @@ const Lists = ({ title, cards, id, addCard, deleteList }) => {
             </div>
           </button>
         )}
-        <CardForm
-          isFormOpen={isFormOpen}
-          toggleForm={toggleForm}
-          listId={id}
-          addCard={addCard}
-        />
+        <div ref={formRef}>
+          <CardForm
+            isFormOpen={isFormOpen}
+            toggleForm={toggleForm}
+            listId={id}
+            addCard={addCard}
+          />
+        </div>
       </div>
     </div>
   );
