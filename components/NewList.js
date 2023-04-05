@@ -43,7 +43,9 @@ const NewList = ({ addList, lists }) => {
                 <AiOutlinePlus />
               </div>
             </IconContext.Provider>
-            <div>{`Ajouter une ${lists.length > 0 ? 'autre' : ''} liste`}</div>
+            <div className='pt-1 font-Arial'>{`Ajouter une ${
+              lists.length > 0 ? 'autre' : ''
+            } liste`}</div>
           </div>
         </button>
       )}

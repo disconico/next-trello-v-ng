@@ -9,9 +9,9 @@ const Board = () => {
     useContext(ListsContext);
 
   return (
-    <main className=' '>
+    <div className=''>
       <BoardHeader resetLists={resetLists} />
-      <div className='ml-1 flex'>
+      <main className='ml-1 flex overflow-hidden'>
         {lists &&
           lists.map((list, index) => (
             <Lists
@@ -25,8 +25,8 @@ const Board = () => {
           ))}
 
         <NewList addList={addList} lists={lists} />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 };
 

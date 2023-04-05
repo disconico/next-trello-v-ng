@@ -42,8 +42,8 @@ const Lists = ({ title, cards, id, addCard, deleteList }) => {
   };
 
   return (
-    <div>
-      <div className='flex flex-col w-[272px] bg-gray-300 mx-1 rounded max-h-min'>
+    <div className='basis-[280px]'>
+      <div className='flex flex-col  bg-gray-300 mx-1 rounded max-h-min'>
         <div className='px-2 py-[10px]'>
           <div className='flex justify-between px-2 items-center'>
             <div className='text-[#313131] font-semibold text-sm'>{title}</div>
@@ -70,7 +70,7 @@ const Lists = ({ title, cards, id, addCard, deleteList }) => {
               >
                 <AiOutlinePlus />
               </IconContext.Provider>
-              <div>{`Ajouter une ${
+              <div className=' font-Arial pt-1'>{`Ajouter une ${
                 cards.length > 0 ? 'autre' : ''
               } carte`}</div>
             </div>

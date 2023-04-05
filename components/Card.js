@@ -19,10 +19,10 @@ const Card = ({ card, listName }) => {
   return (
     <>
       <div
-        className='w-full bg-white hover:bg-gray-100 hover:cursor-pointer rounded shadow px-2 min-h-[32px] text-[#313131] text-sm'
+        className='w-full bg-white hover:bg-gray-100 hover:cursor-pointer rounded shadow-custom px-2 min-h-[32px] text-[#313131] text-sm '
         onClick={toggleModal}
       >
-        <h2 className=' pt-1 h-8'>{title}</h2>
+        <h2 className='pt-2 h-8 font-Arial '>{title}</h2>
         {(description || isFollowed) && (
           <div className='flex gap-2 ml-1 h-6'>
             {isFollowed && (

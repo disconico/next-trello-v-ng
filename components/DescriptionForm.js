@@ -29,7 +29,7 @@ const DescriptionForm = ({
     <form className='flex flex-col gap-2'>
       <textarea
         ref={descriptionRef}
-        className='w-full h-16 text-sm border border-gray-300 rounded-md p-2'
+        className='w-full h-16 text-sm border border-gray-300 rounded p-2'
         placeholder='Ajouter une description plus détaillée...'
         value={newDescription}
         onChange={handleChange}

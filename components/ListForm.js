@@ -36,8 +36,8 @@ const ListForm = ({ isFormOpen, addList, toggleForm }) => {
       <form className='p-1   w-72 bg-gray-300 rounded max-h-min'>
         <textarea
           ref={textareaRef}
-          className='w-full bg-white rounded shadow p-2  text-xs placeholder:text-gray-500 focus:border-blue-600 resize-none h-9'
-          placeholder='Saisissez un titre pour cette carte...'
+          className='w-full bg-white rounded shadow p-2  text-[13px] font-normal  placeholder:text-gray-500 focus:border-blue-600 resize-none h-9'
+          placeholder='Saisissez le titre pour cette liste...'
           value={title}
           onChange={handleDescriptionChange}
         ></textarea>

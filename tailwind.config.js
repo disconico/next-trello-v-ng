@@ -9,7 +9,15 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Arial: ['Arial', 'sans-serif'],
+      },
+      boxShadow: {
+        custom: '0 1px 0 rgba(9, 30, 66, 0.25)',
+      },
+    },
   },
+
   plugins: [],
 };

@@ -63,7 +63,7 @@ const Modal = ({
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center  p-4 bg-black bg-opacity-50'>
       <div
-        className='bg-[#F4F5F7] rounded-md shadow-lg w-[780px]  px-6 pt-4 pb-8'
+        className='bg-[#F4F5F7] rounded shadow-lg w-[780px]  px-6 pt-4 pb-8'
         ref={modalRef}
       >
         <div className='flex justify-between'>
@@ -91,7 +91,7 @@ const Modal = ({
             )}
           </span>
         </div>
-        <div className='mt-4 flex gap-4 '>
+        <div className='mt-6 flex gap-4 '>
           <div className='w-[530px]'>
             {' '}
             <h3 className='text-xl font-semibold mb-2'>Description</h3>

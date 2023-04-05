@@ -3,7 +3,7 @@ const Header = () => {
     <header className='h-10 w-full flex justify-center  bg-[#111111] '>
       <svg
         viewBox='0 0 128 128'
-        className='text-gray-400 hover:text-white cursor-pointer'
+        className='text-gray-400 hover:text-white cursor-pointer transform scale-150'
       >
         <path
           fillRule='evenodd'
