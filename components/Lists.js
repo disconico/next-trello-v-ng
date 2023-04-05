@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
+import useClickOutside from '../hooks/useClickOutside';
 
 const Lists = ({ title, cards, id, addCard, deleteList }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -14,23 +15,9 @@ const Lists = ({ title, cards, id, addCard, deleteList }) => {
     setIsFormOpen((prev) => !prev);
   };
 
-  const handleClickOutside = (e) => {
-    if (formRef.current && !formRef.current.contains(e.target)) {
-      setIsFormOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isFormOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isFormOpen]);
+  useClickOutside(formRef, () => {
+    setIsFormOpen(false);
+  });
 
   const handleAlert = () => {
     const result = window.confirm(

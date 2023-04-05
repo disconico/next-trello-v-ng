@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineMinus } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import Image from 'next/image';
 import DescriptionForm from './DescriptionForm';
+import useClickOutside from '../hooks/useClickOutside';
 
 const Modal = ({
   isOpen,
@@ -21,26 +22,9 @@ const Modal = ({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const modalRef = useRef();
 
-  const handleClickOutside = useCallback(
-    (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        onClose();
-      }
-    },
-    [onClose]
-  );
-
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, handleClickOutside]);
+  useClickOutside(modalRef, () => {
+    onClose();
+  });
 
   if (!isOpen) {
     return null;
