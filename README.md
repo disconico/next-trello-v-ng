@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Trello
 
-## Getting Started
+## Installation et lancement en local
 
-First, run the development server:
+1. Clonez le repo Git :
+
+```bash
+git clone https://github.com/disconico/next-trello-v-ng
+```
+
+2. Accédez au dossier du projet :
+
+```bash
+cd next-trello-v-ng
+```
+
+3. Installez les différents packages :
+
+```bash
+npm install
+```
+
+4. Lancez le serveur de développement :
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Ouvrez votre navigateur et accédez à [http://localhost:3000](http://localhost:3000) pour voir l'application en action.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Version en ligne
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Vous pouvez également consulter la version déployée de l'application sur Firebase Hosting à l'adresse suivante : [https://next-trello-v-ng.web.app/](https://next-trello-v-ng.web.app/).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Bilan de l'exercice
 
-## Learn More
+### Deux difficultés rencontrées
 
-To learn more about Next.js, take a look at the following resources:
+1. Assurer un rendu _pixel perfect_ en respectant scrupuleusement les dimensions et les couleurs de l'application originale.
+2. Créer en un temps limité le pop-up/modal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deux réussites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Réussite à reproduire l'application fournie de manière fidèle et en incorporant toutes les fonctionnalités.
+2. Bonne organisation et structuration du code en suivant les bonnes pratiques de développement.
 
-## Deploy on Vercel
+### Deux évolutions possibles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Améliorer l'UI pour rendre l'application mobile friendly (flex wrap sur les lists par exemple pour eviter le shrink).
+2. Améliorer les alertes (window.confirm) pour supprimer une carte/liste en ajoutant un modal personnalisé.
+3. Ajouter du drag and drop pour déplacer les listes, avec le package react-dnd par exemple. (Jamais utilisé mais à l'air d'être très sympa 😁 !)
